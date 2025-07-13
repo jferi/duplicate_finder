@@ -2,13 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-
-struct Segment {
-    std::string street;
-    char scheme;
-    int from;
-    int to;
-};
+#include "DuplicateFinder.hpp"
 
 std::string nextCsvField(std::istream& in) {
     std::string field, tmp;
@@ -73,11 +67,11 @@ bool readRow(std::ifstream& file, Segment& seg) {
 int main()  {
     std::ifstream file("network.csv");
     Segment seg;
-
+    DuplicateFinder finder;
     while(readRow(file, seg)) {
-        std::cout << seg.street << " " << seg.from << " " << seg.to << std::endl;
+        finder.addSegment(seg);
     }
-
+    finder.printDuplicates(std::cout);
 
     return 0;
 }
